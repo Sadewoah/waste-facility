@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { nav, primaryCta, site } from "@/lib/site";
 import { Close, Menu } from "./Icons";
+import { LangSwitch } from "./LangSwitch";
+import { useT } from "@/lib/i18n/client";
 
 export function Logo({ light = true }: { light?: boolean }) {
   return (
@@ -22,29 +24,31 @@ export function Logo({ light = true }: { light?: boolean }) {
 
 export function Header() {
   const path = usePathname();
+  const t = useT();
   const [open, setOpen] = useState(false);
   return (
     <header className="fixed inset-x-0 top-5 z-50 flex justify-center px-4">
       <div className="relative w-full max-w-[920px]">
-        <nav aria-label="Main" className="flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-forest-950/60 py-2 pl-4 pr-2 text-white shadow-[0_10px_40px_-12px_rgba(0,0,0,0.45)] backdrop-blur-xl">
-          <Link href="/" aria-label={`${site.name} home`}><Logo /></Link>
+        <nav aria-label={t("Main")} className="flex items-center justify-between gap-3 rounded-2xl border border-white/15 bg-forest-950/60 py-2 pl-4 pr-2 text-white shadow-[0_10px_40px_-12px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+          <Link href="/" aria-label={t("{name} home", { name: site.name })}><Logo /></Link>
           <ul className="hidden items-center gap-1 md:flex">
             {nav.map((n) => {
               const active = n.href === "/" ? path === "/" : path.startsWith(n.href);
               return (
                 <li key={n.href}>
                   <Link href={n.href} aria-current={active ? "page" : undefined} className={`rounded-lg px-3.5 py-2 text-xs font-medium transition-colors ${active ? "bg-white/20" : "text-white/80 hover:bg-white/10 hover:text-white"}`}>
-                    {n.label}
+                    {t(n.label)}
                   </Link>
                 </li>
               );
             })}
           </ul>
           <div className="flex items-center gap-2">
+            <LangSwitch />
             <Link href="/contact" className="hidden rounded-lg bg-lime px-4 py-2.5 text-xs font-bold text-forest-950 transition-colors hover:bg-white sm:inline-block">
-              {primaryCta}
+              {t(primaryCta)}
             </Link>
-            <button onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Close menu" : "Open menu"} className="grid h-10 w-10 place-items-center rounded-lg bg-white/10 md:hidden">
+            <button onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? t("Close menu") : t("Open menu")} className="grid h-10 w-10 place-items-center rounded-lg bg-white/10 md:hidden">
               {open ? <Close /> : <Menu />}
             </button>
           </div>
@@ -54,12 +58,12 @@ export function Header() {
             <ul className="flex flex-col">
               {nav.map((n) => (
                 <li key={n.href}>
-                  <Link href={n.href} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-3 text-base font-medium hover:bg-white/10">{n.label}</Link>
+                  <Link href={n.href} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-3 text-base font-medium hover:bg-white/10">{t(n.label)}</Link>
                 </li>
               ))}
             </ul>
             <Link href="/contact" onClick={() => setOpen(false)} className="mt-2 block rounded-xl bg-lime px-4 py-3.5 text-center text-sm font-bold text-forest-950">
-              {primaryCta}
+              {t(primaryCta)}
             </Link>
           </div>
         )}

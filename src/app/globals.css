@@ -60,3 +60,23 @@ body {
   .rise, .reveal { animation: none; opacity: 1; transform: none; transition: none; }
   .animate-marquee, .animate-spin-slow { animation: none; }
 }
+
+/* Home hero: the big SOMYA word flies into the navbar logo (HeroDock) */
+.dock-title {
+  --k: 0;
+  color: rgb(255 255 255 / calc(0.4 + 0.6 * var(--k)));
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(25% + 75% * var(--k)), transparent calc(80% + 20% * var(--k)));
+  mask-image: linear-gradient(to bottom, #000 calc(25% + 75% * var(--k)), transparent calc(80% + 20% * var(--k)));
+}
+[data-dock] #nav-brand { opacity: 0; }
+
+/* ── Preloader (SomyaPreloader) ──
+   The overlay is SSR'd but only visible while <html data-preloading> is set (inline script in layout.tsx). */
+#somya-preloader { display: none; }
+html[data-preloading] #somya-preloader { display: block; }
+html[data-preloading] { overflow: hidden; scrollbar-gutter: stable; }
+/* hold the hero's one-time entrance until the overlay leaves, so it plays in view */
+html[data-preloading] .rise { animation-play-state: paused; }
+@keyframes preloader-slide { from { transform: translateX(-100%); } to { transform: translateX(300%); } }
+.preloader-indeterminate { animation: preloader-slide 1.3s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
+@media (prefers-reduced-motion: reduce) { .preloader-indeterminate { animation: none; width: 100%; opacity: 0.6; } }

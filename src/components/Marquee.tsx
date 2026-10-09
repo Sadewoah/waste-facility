@@ -1,10 +1,12 @@
+import { getT } from "@/lib/i18n/server";
 import { clients } from "@/lib/content";
 
-export function Marquee() {
-  const items = clients.map((c) => c.name);
+export async function Marquee() {
+  const t = await getT();
+  const items = clients.map((c) => t(c.name));
   return (
-    <section aria-label="Who we serve" className="mt-14">
-      <p className="text-center text-xs text-mute">Built for businesses that generate organic waste</p>
+    <section aria-label={t("Who we serve")} className="mt-14">
+      <p className="text-center text-xs text-mute">{t("Built for businesses that generate organic waste")}</p>
       <div className="relative mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_12%,black_88%,transparent)]">
         <ul className="flex w-max animate-marquee items-center gap-12 pr-12">
           {[...items, ...items].map((n, i) => (

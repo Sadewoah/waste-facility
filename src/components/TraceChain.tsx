@@ -1,4 +1,5 @@
 "use client";
+import { useT } from "@/lib/i18n/client";
 import { useEffect, useRef, useState } from "react";
 import { Check } from "./Icons";
 
@@ -14,6 +15,7 @@ const chain = [
 ];
 
 export function TraceChain() {
+  const t = useT();
   const ref = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
   const [inView, setInView] = useState(false);
@@ -44,8 +46,8 @@ export function TraceChain() {
       className="mx-3 mt-28 overflow-hidden rounded-[28px] bg-forest-900 px-6 py-16 text-white md:px-12 md:py-24"
     >
       <div className="mx-auto max-w-[1200px]">
-        <h2 className="max-w-2xl text-3xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">Know where your waste goes.</h2>
-        <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/70">Each client journey is identifiable from collection through processing and output.</p>
+        <h2 className="max-w-2xl text-3xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">{t("Know where your waste goes.")}</h2>
+        <p className="mt-5 max-w-lg text-sm leading-relaxed text-white/70">{t("Each client journey is identifiable from collection through processing and output.")}</p>
 
         <ol className="relative mt-14 grid gap-7 lg:grid-cols-8 lg:gap-2 lg:pt-14">
           {/* Horizontal track (desktop) */}
@@ -58,7 +60,7 @@ export function TraceChain() {
           {/* Traveling label (desktop) */}
           <span aria-hidden className="absolute top-3 hidden -translate-x-1/2 transition-[left] duration-700 ease-out lg:block" style={{ left: `${6.25 + progress * 87.5}%` }}>
             <span className="relative block whitespace-nowrap rounded-full bg-lime px-3 py-1.5 text-xs font-bold text-forest-950">
-              Your batch
+              {t("Your batch")}
               <span className="absolute left-1/2 top-full h-2 w-2 -translate-x-1/2 -translate-y-1 rotate-45 bg-lime" />
             </span>
           </span>
@@ -69,16 +71,16 @@ export function TraceChain() {
             const reached = k <= active;
             return (
               <li key={c.t} aria-current={on ? "step" : undefined} className="relative flex items-start gap-4 lg:flex-col lg:items-center lg:gap-5 lg:text-center">
-                <button onClick={() => setActive(k)} aria-label={`Show ${c.t}`} className="relative z-10 shrink-0 rounded-full">
+                <button onClick={() => setActive(k)} aria-label={t("Show {name}", { name: t(c.t) })} className="relative z-10 shrink-0 rounded-full">
                   {on && <span aria-hidden className="absolute inset-0 animate-ping rounded-full bg-lime/50 motion-reduce:hidden" />}
                   <span className={`relative grid h-10 w-10 place-items-center rounded-full border text-sm font-bold transition-all duration-500 ${reached ? "border-lime bg-lime text-forest-950" : "border-white/25 bg-forest-900 text-white/60"} ${on ? "scale-110" : ""}`}>
                     {done ? <Check className="h-4 w-4" /> : k + 1}
                   </span>
                 </button>
                 <div className={`pt-1.5 transition-opacity duration-500 lg:pt-0 ${reached ? "opacity-100" : "opacity-45"}`}>
-                  <p className="text-lg font-semibold leading-tight tracking-[-0.02em]">{c.t}</p>
-                  <p className="mt-1.5 text-xs leading-relaxed text-white/65">{c.d}</p>
-                  {on && <span className="mt-3 inline-block rounded-full bg-lime px-2.5 py-1 text-[11px] font-bold text-forest-950 lg:hidden">Your batch is here</span>}
+                  <p className="text-lg font-semibold leading-tight tracking-[-0.02em]">{t(c.t)}</p>
+                  <p className="mt-1.5 text-xs leading-relaxed text-white/65">{t(c.d)}</p>
+                  {on && <span className="mt-3 inline-block rounded-full bg-lime px-2.5 py-1 text-[11px] font-bold text-forest-950 lg:hidden">{t("Your batch is here")}</span>}
                 </div>
               </li>
             );

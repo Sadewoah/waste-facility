@@ -1,3 +1,4 @@
+import { getT } from "@/lib/i18n/server";
 import { HomeHero } from "@/components/HomeHero";
 import { Marquee } from "@/components/Marquee";
 import { Challenge } from "@/components/Challenge";
@@ -9,7 +10,8 @@ import { LoopRing } from "@/components/LoopRing";
 import { Impact } from "@/components/Impact";
 import { CTA } from "@/components/CTA";
 
-export default function Home() {
+export default async function Home() {
+  const t = await getT();
   return (
     <>
       <HomeHero />
@@ -21,7 +23,7 @@ export default function Home() {
       <Why />
       <LoopRing />
       <Impact />
-      <CTA headline="Ready to change the way your business handles organic waste?" copy="Let's build a cleaner, more traceable, and more circular waste journey for your business." />
+      <CTA headline={t("Ready to change the way your business handles organic waste?")} copy={t("Let's build a cleaner, more traceable, and more circular waste journey for your business.")} />
     </>
   );
 }

@@ -1,3 +1,4 @@
+import { getT } from "@/lib/i18n/server";
 import type { Metadata } from "next";
 import { PageHero } from "@/components/PageHero";
 import { SectionHead, wrap } from "@/components/Section";
@@ -5,10 +6,13 @@ import { Reveal } from "@/components/Reveal";
 import { Media } from "@/components/Media";
 import { BusinessTabs } from "@/components/BusinessTabs";
 import { CTA } from "@/components/CTA";
+import { WhatYouGet } from "@/components/WhatYouGet";
 import { TraceChain } from "@/components/TraceChain";
-import { ArrowDownRight, Bin, Check, Cog, Loop, Tag, Truck } from "@/components/Icons";
+import { ArrowDownRight, Bin, Cog, Loop, Tag, Truck } from "@/components/Icons";
 
-export const metadata: Metadata = { title: "Solution" };
+export async function generateMetadata(): Promise<Metadata> {
+  return { title: (await getT())("Solution") };
+}
 
 const provide = [
   { i: Bin, m: "group-hover:-rotate-12 group-hover:scale-110", t: "SOMYA Bin System", d: "Dedicated bins provided according to the client's organic waste generation and operational requirements." },
@@ -56,13 +60,14 @@ const faq = [
   ["Can the system support data reporting?", "The project is designed to support transparent data reporting for clients, partners, and stakeholders."],
 ];
 
-export default function SolutionPage() {
+export default async function SolutionPage() {
+  const t = await getT();
   return (
     <>
-      <PageHero ghost="SOLUTION" kind="windrows" seed={21} name="page-solution" title="Your waste. Our process. A shared impact." copy="From collection to processing and compost return, SOMYA Waste Facility provides an integrated system for managing source-separated organic waste." cta="Talk to our team" />
+      <PageHero ghost={t("SOLUTION")} kind="windrows" seed={21} name="page-solution" title={t("Your waste. Our process. A shared impact.")} copy={t("From collection to processing and compost return, SOMYA Waste Facility provides an integrated system for managing source-separated organic waste.")} cta={t("Talk to our team")} />
 
       <section className={`${wrap} mt-28`}>
-        <SectionHead title="What we provide." copy="Six services that work as one, from the first bin to the compost handover." />
+        <SectionHead title={t("What we provide.")} copy={t("Six services that work as one, from the first bin to the compost handover.")} />
         <ul className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {provide.map((p, k) => (
             <li key={p.t}>
@@ -88,8 +93,8 @@ export default function SolutionPage() {
                   </span>
 
                   <div className="relative z-10">
-                    <h3 className="mt-12 text-2xl font-medium tracking-[-0.03em] transition-colors duration-500 group-hover:text-white">{p.t}</h3>
-                    <p className="mt-2 text-sm leading-relaxed text-forest-900/75 transition-colors duration-500 group-hover:text-white/75">{p.d}</p>
+                    <h3 className="mt-12 text-2xl font-medium tracking-[-0.03em] transition-colors duration-500 group-hover:text-white">{t(p.t)}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-forest-900/75 transition-colors duration-500 group-hover:text-white/75">{t(p.d)}</p>
                   </div>
                 </div>
               </Reveal>
@@ -99,24 +104,24 @@ export default function SolutionPage() {
       </section>
 
       <section className={`${wrap} mt-28`}>
-        <SectionHead title="Built around source-separated organic waste." copy="The waste streams below come from the facility planning material." />
+        <SectionHead title={t("Built around source-separated organic waste.")} copy={t("The waste streams below come from the facility planning material.")} />
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {accept.map((a, k) => (
             <li key={a.t} className="relative h-64 overflow-hidden rounded-2xl">
               <Media kind={a.kind} seed={50 + k} className="absolute inset-0" />
               <div className="absolute inset-0 bg-gradient-to-t from-forest-950/85 to-transparent" />
-              <h3 className="absolute inset-x-0 bottom-0 p-5 text-xl font-semibold leading-tight tracking-[-0.02em] text-white">{a.t}</h3>
+              <h3 className="absolute inset-x-0 bottom-0 p-5 text-xl font-semibold leading-tight tracking-[-0.02em] text-white">{t(a.t)}</h3>
             </li>
           ))}
         </ul>
-        <p className="mt-5 text-xs text-mute">Accepted materials are subject to SOMYA Waste Facility waste acceptance requirements and operational conditions.</p>
+        <p className="mt-5 text-xs text-mute">{t("Accepted materials are subject to SOMYA Waste Facility waste acceptance requirements and operational conditions.")}</p>
       </section>
 
       <section className={`${wrap} mt-28`}>
         <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-16">
           <div className="md:sticky md:top-28 md:self-start">
-            <h2 className="text-3xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">Our process, step by step.</h2>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-mute">Processing durations are standard operational targets and may be adjusted based on material condition, operational circumstances, and quality-control requirements.</p>
+            <h2 className="text-3xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">{t("Our process, step by step.")}</h2>
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-mute">{t("Processing durations are standard operational targets and may be adjusted based on material condition, operational circumstances, and quality-control requirements.")}</p>
           </div>
           <ol className="relative space-y-3 before:absolute before:bottom-6 before:left-[27px] before:top-6 before:w-px before:bg-forest-800/15">
             {journey.map((s, k) => (
@@ -125,8 +130,8 @@ export default function SolutionPage() {
                   <div className="relative flex gap-5 rounded-2xl bg-lime-soft p-5">
                     <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-lime text-sm font-bold text-forest-950">{k + 1}</span>
                     <div>
-                      <h3 className="text-xl font-semibold tracking-[-0.02em]">{s.t}</h3>
-                      <p className="mt-1.5 text-sm leading-relaxed text-mute">{s.d}</p>
+                      <h3 className="text-xl font-semibold tracking-[-0.02em]">{t(s.t)}</h3>
+                      <p className="mt-1.5 text-sm leading-relaxed text-mute">{t(s.d)}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -139,39 +144,30 @@ export default function SolutionPage() {
       <TraceChain />
 
       <section className={`${wrap} mt-28`}>
-        <SectionHead title="Solutions by business type." />
+        <SectionHead title={t("Solutions by business type.")} />
         <BusinessTabs />
       </section>
 
-      <section className={`${wrap} mt-28`}>
-        <SectionHead title="What you get." />
-        <ul className="mt-12 grid gap-x-8 gap-y-3 md:grid-cols-2">
-          {get.map((g) => (
-            <li key={g} className="flex items-center gap-4 rounded-xl bg-lime-soft px-5 py-4 text-base font-medium">
-              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-lime text-forest-950"><Check className="h-3.5 w-3.5" /></span>{g}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <WhatYouGet title={t("What you get.")} items={get.map((g) => t(g))} />
 
       <section className={`${wrap} mt-28`}>
-        <SectionHead title="Frequently asked questions." />
+        <SectionHead title={t("Frequently asked questions.")} />
         <div className="mt-12 space-y-2">
           {faq.map(([q, a]) => (
             <details key={q} className="group rounded-2xl bg-lime-soft px-6 py-5 open:bg-lime">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-medium tracking-[-0.02em] [&::-webkit-details-marker]:hidden">
-                {q}
+                {t(q)}
                 <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white transition-transform duration-300 group-open:rotate-45">
                   <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
                 </span>
               </summary>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-forest-900/80">{a}</p>
+              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-forest-900/80">{t(a)}</p>
             </details>
           ))}
         </div>
       </section>
 
-      <CTA headline="Let's start with your waste." copy="Tell us about your business and organic waste volume, and we'll find the right service approach." />
+      <CTA headline={t("Let's start with your waste.")} copy={t("Tell us about your business and organic waste volume, and we'll find the right service approach.")} />
     </>
   );
 }

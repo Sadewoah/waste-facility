@@ -9,8 +9,8 @@ export const photos: Record<string, string | undefined> = {
   "challenge-problem": undefined,
   "challenge-bins": undefined,
   "challenge-compost": undefined,
-  cta: undefined,
+  cta: "/images/bg/bg-cta.jpg",
   "page-solution": undefined,
   "page-about": undefined,
-  "page-contact": undefined,
+  "page-contact": "/images/company/7.webp",
 };

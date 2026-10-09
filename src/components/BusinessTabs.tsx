@@ -1,4 +1,5 @@
 "use client";
+import { useT } from "@/lib/i18n/client";
 import { useState } from "react";
 import { Media, type MediaKind } from "./Media";
 
@@ -13,12 +14,13 @@ const tabs: { t: string; d: string; kind: MediaKind }[] = [
 
 export function BusinessTabs() {
   const [i, setI] = useState(0);
+  const t = useT();
   return (
     <div className="mt-12 grid gap-6 md:grid-cols-[320px_1fr]">
-      <div role="tablist" aria-label="Business types" className="flex gap-2 overflow-x-auto md:flex-col md:overflow-visible no-scrollbar">
+      <div role="tablist" aria-label={t("Business types")} className="flex gap-2 overflow-x-auto md:flex-col md:overflow-visible no-scrollbar">
         {tabs.map((x, k) => (
           <button key={x.t} role="tab" id={`tab-${k}`} aria-selected={k === i} aria-controls="tab-panel" onClick={() => setI(k)} className={`shrink-0 rounded-xl px-5 py-4 text-left text-lg font-medium tracking-[-0.02em] transition-colors md:text-xl ${k === i ? "bg-lime" : "bg-lime-soft hover:bg-lime/50"}`}>
-            {x.t}
+            {t(x.t)}
           </button>
         ))}
       </div>
@@ -26,8 +28,8 @@ export function BusinessTabs() {
         <Media kind={tabs[i].kind} seed={40 + i} className="absolute inset-0" />
         <div className="absolute inset-0 bg-gradient-to-t from-forest-950/85 to-transparent" />
         <div className="relative flex h-full min-h-[360px] flex-col justify-end p-7 text-white md:p-10">
-          <h3 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">{tabs[i].t}</h3>
-          <p className="mt-3 max-w-md text-base leading-relaxed text-white/85">{tabs[i].d}</p>
+          <h3 className="text-3xl font-semibold tracking-[-0.03em] md:text-4xl">{t(tabs[i].t)}</h3>
+          <p className="mt-3 max-w-md text-base leading-relaxed text-white/85">{t(tabs[i].d)}</p>
         </div>
       </div>
     </div>
