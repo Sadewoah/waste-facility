@@ -6,6 +6,7 @@ import { ArrowDownRight, Chart, Cog, Eye, Loop, Truck, Users } from "./Icons";
 
 const icons = { truck: Truck, users: Users, eye: Eye, cog: Cog, loop: Loop, chart: Chart };
 
+// Setiap ikon punya gerakan hover sendiri
 const iconMotion: Record<string, string> = {
   truck: "group-hover:translate-x-1.5",
   users: "group-hover:scale-110",
@@ -20,15 +21,14 @@ export async function Why() {
   return (
     <section className={`${wrap} mt-28`}>
       <SectionHead title={t("More than collection. It's a complete system.")} />
-      
-      <ul className="no-scrollbar mt-12 flex gap-3 overflow-x-auto snap-x snap-mandatory pb-4 md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3">
+      <ul className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
         {benefits.map((b, i) => {
           const Icon = icons[b.icon as keyof typeof icons];
           return (
-            <li key={b.t} className="w-[85vw] max-w-[320px] shrink-0 snap-start md:w-auto">
+            <li key={b.t}>
               <Reveal delay={(i % 3) * 80} className="h-full">
                 <div className="group relative h-full overflow-hidden rounded-2xl bg-lime p-7 transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
-                  
+                  {/* Lingkaran yang membesar dari ikon */}
                   <span
                     aria-hidden
                     className="absolute left-[3.125rem] top-[3.125rem] h-11 w-11 -translate-x-1/2 -translate-y-1/2 rounded-full bg-forest-900 transition-transform duration-700 ease-[cubic-bezier(0.2,0.7,0.2,1)] group-hover:scale-[20] motion-reduce:transition-none"
