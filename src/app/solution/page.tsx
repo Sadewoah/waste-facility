@@ -66,11 +66,15 @@ export default async function SolutionPage() {
     <>
       <PageHero ghost={t("SOLUTION")} kind="windrows" seed={21} name="page-solution" title={t("Your waste. Our process. A shared impact.")} copy={t("From collection to processing and compost return, SOMYA Waste Facility provides an integrated system for managing source-separated organic waste.")} cta={t("Talk to our team")} />
 
-      <section className={`${wrap} mt-28`}>
+
+      <section className={`${wrap} mt-28 text-center lg:text-left`}>
         <SectionHead title={t("What we provide.")} copy={t("Six services that work as one, from the first bin to the compost handover.")} />
-        <ul className="mt-12 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 pt-2 scrollbar-none md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0">
           {provide.map((p, k) => (
-            <li key={p.t}>
+            <li 
+              key={p.t}
+              className="w-[85vw] min-w-[300px] flex-shrink-0 snap-center md:w-auto md:min-w-0 md:flex-shrink"
+            >
               <Reveal delay={(k % 3) * 80} className="h-full">
                 <div className="group relative h-full overflow-hidden rounded-2xl bg-lime p-7 transition-transform duration-500 hover:-translate-y-1 motion-reduce:transition-none motion-reduce:hover:translate-y-0">
                   {/* Lingkaran yang membesar dari ikon */}
@@ -103,11 +107,15 @@ export default async function SolutionPage() {
         </ul>
       </section>
 
+      {/* SECTION 2: Built around source-separated organic waste (Scroll X di Mobile) */}
       <section className={`${wrap} mt-28`}>
         <SectionHead title={t("Built around source-separated organic waste.")} copy={t("The waste streams below come from the facility planning material.")} />
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-4 pt-2 scrollbar-none sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible sm:pb-0">
           {accept.map((a, k) => (
-            <li key={a.t} className="relative h-64 overflow-hidden rounded-2xl">
+            <li 
+              key={a.t} 
+              className="relative h-64 w-[80vw] min-w-[260px] flex-shrink-0 snap-center overflow-hidden rounded-2xl sm:w-auto sm:min-w-0 sm:flex-shrink"
+            >
               <Media kind={a.kind} seed={50 + k} className="absolute inset-0" />
               <div className="absolute inset-0 bg-gradient-to-t from-forest-950/85 to-transparent" />
               <h3 className="absolute inset-x-0 bottom-0 p-5 text-xl font-semibold leading-tight tracking-[-0.02em] text-white">{t(a.t)}</h3>
@@ -117,29 +125,60 @@ export default async function SolutionPage() {
         <p className="mt-5 text-xs text-mute">{t("Accepted materials are subject to SOMYA Waste Facility waste acceptance requirements and operational conditions.")}</p>
       </section>
 
-      <section className={`${wrap} mt-28`}>
-        <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-16">
-          <div className="md:sticky md:top-28 md:self-start">
-            <h2 className="text-3xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">{t("Our process, step by step.")}</h2>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-mute">{t("Processing durations are standard operational targets and may be adjusted based on material condition, operational circumstances, and quality-control requirements.")}</p>
-          </div>
-          <ol className="relative space-y-3 before:absolute before:bottom-6 before:left-[27px] before:top-6 before:w-px before:bg-forest-800/15">
-            {journey.map((s, k) => (
-              <li key={s.t}>
-                <Reveal>
-                  <div className="relative flex gap-5 rounded-2xl bg-lime-soft p-5">
-                    <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-lime text-sm font-bold text-forest-950">{k + 1}</span>
-                    <div>
-                      <h3 className="text-xl font-semibold tracking-[-0.02em]">{t(s.t)}</h3>
-                      <p className="mt-1.5 text-sm leading-relaxed text-mute">{t(s.d)}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+<section className={`${wrap} mt-28`}>
+  <div className="grid gap-12 md:grid-cols-[1fr_1.4fr] md:gap-16">
+    <div className="md:sticky md:top-28 md:self-start">
+      <h2 className="text-3xl font-semibold leading-[1.05] tracking-[-0.035em] sm:text-5xl">{t("Our process, step by step.")}</h2>
+      <p className="mt-5 max-w-sm text-sm leading-relaxed text-mute">{t("Processing durations are standard operational targets and may be adjusted based on material condition, operational circumstances, and quality-control requirements.")}</p>
+    </div>
+
+    <div className="min-w-0">
+      {/* Wrapper scroll:
+          - Mobile  : scroll-x (swipe), tidak memanjang ke bawah
+          - Desktop : tinggi dibatasi (~3-4 step terlihat), scroll-y + fade di bawah */}
+      <div
+        className="
+          -mx-5 overflow-x-auto px-5 scrollbar-none
+          md:mx-0 md:max-h-[440px] md:snap-y md:overflow-y-auto md:overflow-x-hidden md:px-0 md:pr-3
+          md:[scrollbar-width:thin]
+          md:[mask-image:linear-gradient(to_bottom,black_88%,transparent)]
+        "
+        tabIndex={0}
+        aria-label={t("Our process, step by step.")}
+      >
+        <ol
+          className="
+            relative flex snap-x snap-mandatory gap-4 pb-4
+            md:block md:snap-none md:space-y-3 md:pb-12
+            before:hidden md:before:block md:before:absolute md:before:bottom-6 md:before:left-[27px] md:before:top-6 md:before:w-px md:before:bg-forest-800/15
+          "
+        >
+          {journey.map((s, k) => (
+            <li
+              key={s.t}
+              className="w-[78vw] min-w-[270px] shrink-0 snap-center md:w-auto md:min-w-0 md:shrink md:snap-start"
+            >
+              <div className="relative flex h-full gap-5 rounded-2xl bg-lime-soft p-5">
+                <span className="relative z-10 grid h-11 w-11 shrink-0 place-items-center rounded-full bg-lime text-sm font-bold text-forest-950">
+                  {k + 1}
+                </span>
+                <div>
+                  <h3 className="text-xl font-semibold tracking-[-0.02em]">{t(s.t)}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-mute">{t(s.d)}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      {/* Hint hanya di mobile */}
+      <p className="mt-2 text-xs text-mute md:hidden">
+        {t("Swipe to see all steps")} →
+      </p>
+    </div>
+  </div>
+</section>
 
       <TraceChain />
 
