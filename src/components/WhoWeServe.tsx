@@ -17,7 +17,7 @@ export async function WhoWeServe() {
 
   return (
     <section className={`${wrap} mt-28`}>
-      <SectionHead className="text-center"
+      <SectionHead className="text-center lg:text-left md:text-left"
         title={t("For businesses that generate organic waste.")}
         copy={t("Built for real operations, from a single café to a resort with a full kitchen brigade.")}
       />
