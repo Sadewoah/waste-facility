@@ -13,7 +13,7 @@ export function ServiceRows() {
   const t = useT();
   return (
     <section className={`${wrap} mt-28`}>
-      <SectionHead className="px-4 text-center" title={t("A complete organic waste journey.")} copy={t("Five connected services, from the bin at your door to compost that goes back to work.")} />
+      <SectionHead className="px-4 text-center lg:text-left md:text-left" title={t("A complete organic waste journey.")} copy={t("Five connected services, from the bin at your door to compost that goes back to work.")} />
       <ul className="mt-12 space-y-3">
         {services.map((s, i) => {
           const Icon = icons[s.icon as keyof typeof icons];
